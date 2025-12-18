@@ -1,0 +1,153 @@
+🟢 ASSIGNMENT 1: User Profile Service
+
+📁 userApi.js (DEPENDENCY – mock this)
+export async function fetchUserProfile(id) {
+  return { id, name: 'Real User', active: true };
+}
+
+📁 userService.js (LOGIC – test this)
+import { fetchUserProfile } from './userApi';
+
+export async function getUserStatus(id) {
+  const user = await fetchUserProfile(id);
+
+  if (!user.active) {
+    return 'INACTIVE';
+  }
+
+  return `ACTIVE-${user.name}`;
+}
+
+❓ TASKS
+
+Create userService.test.js
+
+Mock fetchUserProfile
+
+Test:
+
+Active user
+
+Inactive user
+
+
+
+
+🟢 ASSIGNMENT 2: Order Total Calculator
+📁 priceApi.js (DEPENDENCY – mock this)
+export function getPrice() {
+  return 100;
+}
+
+📁 orderService.js (LOGIC – test this)
+import { getPrice } from './priceApi';
+
+export function calculateTotal(quantity) {
+  return getPrice() * quantity;
+}
+
+❓ TASKS
+
+Create orderService.test.js
+
+Mock getPrice
+
+Test:
+
+Quantity = 2
+
+Quantity = 0
+
+🟢 ASSIGNMENT 3: Error Handling (IMPORTANT)
+📁 authApi.js (DEPENDENCY – mock this)
+export async function loginApi(username, password) {
+  if (password !== 'secret') {
+    throw new Error('Invalid credentials');
+  }
+  return { token: 'real-token' };
+}
+
+📁 authService.js (LOGIC – test this)
+import { loginApi } from './authApi';
+
+export async function login(username, password) {
+  try {
+    const result = await loginApi(username, password);
+    return result.token;
+  } catch (err) {
+    return 'LOGIN_FAILED';
+  }
+}
+
+
+
+❓ TASKS
+
+Create authService.test.js
+
+Mock loginApi
+
+Test:
+
+Login success
+
+Login failure
+
+🟢 ASSIGNMENT 4: Partial Mock (Advanced)
+📁 config.js
+export const ENV = 'PROD';
+
+export function getToken() {
+  return 'real-token';
+}
+
+📁 client.js
+import { ENV, getToken } from './config';
+
+export function getClientConfig() {
+  return `${ENV}-${getToken()}`;
+}
+
+❓ TASKS
+
+Create client.test.js
+
+Mock only getToken
+
+Keep ENV real
+
+🏁 HOW TO SUBMIT (FOR PRACTICE)
+
+You can:
+
+Paste one test file at a time
+
+Or say “check assignment 1”
+
+Or say “give solution for assignment 2”
+
+I’ll:
+✔ Review
+✔ Fix mistakes
+✔ Explain improvements
+✔ Show interview-level version
+
+
+
+
+
+🔥 INTERVIEW BONUS
+
+After finishing:
+
+You’ll know what to test vs what to mock
+
+You can confidently answer:
+
+“How do you mock dependencies in Jest?”
+
+When you’re ready:
+👉 Start with Assignment 1
+👉 Paste your userService.test.js here
+
+I’ll review it line-by-line 👍
