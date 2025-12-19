@@ -5,16 +5,18 @@ export async function fetchUserProfile(id) {
   return { id, name: 'Real User', active: true };
 }
 
+
+
 📁 userService.js (LOGIC – test this)
 import { fetchUserProfile } from './userApi';
 
-export async function getUserStatus(id) {
+export async function getUserStatus(id) 
+{
   const user = await fetchUserProfile(id);
-
-  if (!user.active) {
+  if (!user.active) 
+  {
     return 'INACTIVE';
   }
-
   return `ACTIVE-${user.name}`;
 }
 
