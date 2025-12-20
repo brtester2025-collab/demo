@@ -12,5 +12,11 @@
   },
   "dependencies": {
     "reflect-metadata": "^0.2.2"
-  }
+  },
+  "name": "demo-1",
+  "description": "Jest checking and testing the files for the supported version",
+  "version": "1.0.0",
+  "main": "ai.js",
+  "author": "",
+  "license": "ISC"
 }
