@@ -1,0 +1,101 @@
+1️⃣ describe + test / it
+
+Used to group and define tests.
+
+describe('Math functions', () => {
+  test('adds two numbers', () => {
+    expect(2 + 3).toBe(5);
+  });
+
+  it('subtracts two numbers', () => {
+    expect(5 - 2).toBe(3);
+  });
+});
+
+
+📌 test and it are the same (use either).
+
+
+
+2️⃣ expect()
+
+expect() is where assertion starts.
+
+expect(value).matcher(expectedValue);
+
+
+Example:
+
+expect(10).toBe(10);
+
+
+
+
+3️⃣ Matchers (VERY IMPORTANT)
+
+✅ toBe (Exact match)
+
+Use for:
+
+numbers
+
+strings
+
+booleans
+
+expect(5).toBe(5);
+expect('hello').toBe('hello');
+
+
+❌ Don’t use for objects/arrays.
+
+✅ toEqual (Deep comparison)
+
+Use for:
+
+objects
+
+arrays
+
+expect({ a: 1 }).toEqual({ a: 1 });
+expect([1, 2]).toEqual([1, 2]);
+
+✅ toContain
+
+Use for:
+
+arrays
+
+strings
+
+expect([1, 2, 3]).toContain(2);
+expect('jest testing').toContain('test');
+
+
+
+✅ toBeTruthy / toBeFalsy
+Checks truthy / falsy values.
+
+expect(true).toBeTruthy();
+expect(1).toBeTruthy();
+
+expect(false).toBeFalsy();
+expect(0).toBeFalsy();
+
+
+
+✅ toThrow (Error testing)
+
+Used when function throws an error.
+
+function divide(a, b) {
+  if (b === 0) throw new Error('Invalid');
+  return a / b;
+}
+
+test('throws error when b is zero', () => {
+  expect(() => divide(10, 0)).toThrow('Invalid');
+});
+
+
+📌 Important: function must be wrapped in () =>
