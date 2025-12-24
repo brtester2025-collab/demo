@@ -3,7 +3,7 @@ test('check sum', () => {
 })
 
 test('comparison', () => {
-    expect({ name: 'teter' }).toEqual({ name: 'tester' })
+    expect({ name: 'tester' }).toEqual({ name: 'tester' })
 })
 
 test('array contains', () => {
@@ -11,7 +11,7 @@ test('array contains', () => {
 })
 
 test('throw error', () => {
-    expect(() => {
+    expect('Error check', () => {
         throw new Error('fail');
     }).toThrow('fail');
 })

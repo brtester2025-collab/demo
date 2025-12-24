@@ -98,4 +98,9 @@ test('throws error when b is zero', () => {
 });
 
 
+test(("error") {
+    set:author key (a,b){
+
+    }
+})
 📌 Important: function must be wrapped in () =>

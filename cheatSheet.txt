@@ -1,0 +1,8 @@
+steps:-
+
+1- check the name and validation of the form and also check the url  that matches the webpage 
+2- filters are working 
+3- Content is showing according to the admin panel and also check the sorting based on the product that are added on the panel.
+4- duplication of the product on the change the filter continously and also reset button when click it remove all the products
+5- blank spacce on the user  input field  from every device like phone and  ipad devices.
+6- spelling mistake on the website and also in the app
