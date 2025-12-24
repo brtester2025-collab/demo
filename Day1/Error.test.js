@@ -3,7 +3,6 @@ function divide(a, b) {
         throw new Error("invalid")
     }
     return a / b;
-
 }
 
 test('throw new error', () => {
@@ -11,7 +10,8 @@ test('throw new error', () => {
 })
 
 // test('check the return value', () => {
-//     expect(() => divide(10, 1)).toBe(a / b)
+    
+//     expect(() => divide(10, 1)).toBe(10)
 // })
 
 
