@@ -26,3 +26,10 @@ test('Status - 3', () => {
 
 
 
+
+
+const divide = jest.fn();
+test("this for division", () => {
+    divide.mockImplementation((a, b) => a / b)
+    expect(divide(10, 2)).toBe(5)
+})
