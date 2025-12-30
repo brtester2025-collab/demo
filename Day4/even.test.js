@@ -8,3 +8,14 @@ test('to check the even number', () => {
     expect(evenNo).toHaveBeenCalledWith(10)
 
 })
+
+
+
+
+
+// another way to without adding mock function 
+
+const isEven = (n) => n % 2 === 0;
+test('even or odd', () => {
+    expect(isEven(4)).toBe(true)
+})

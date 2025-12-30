@@ -1,0 +1,108 @@
+These patterns are used in real projects every day. Let me explain where, why, and how, so you can confidently say this in interviews.
+
+🔥 Short Answer (Interview Ready)
+
+Yes, this code is useful in real projects. These are standard unit and integration testing patterns used to test APIs without calling real servers.
+
+📍 Where this code is used in real projects
+✅ 1️⃣ Production Web Apps (Angular / React / Vue)
+
+Testing services that call backend APIs
+
+Example: login, signup, product list, payments
+
+fetch('/api/login')
+axios.get('/products')
+
+
+➡️ Always tested with mocked API responses
+
+✅ 2️⃣ Enterprise Applications
+
+Banking
+
+E-commerce
+
+Healthcare
+
+Logistics
+
+They never hit real APIs in unit tests
+(Mocked APIs prevent data corruption & outages)
+
+✅ 3️⃣ CI/CD Pipelines
+
+GitHub Actions
+
+GitLab CI
+
+Jenkins
+
+Real APIs ❌
+Mocked APIs ✅
+
+Why?
+
+CI has no internet sometimes
+
+APIs may be rate-limited
+
+Tests must be fast
+
+🧠 Why mocking API code is necessary
+Without Mock	With Mock
+Slow tests	Fast tests
+Flaky failures	Stable
+Internet needed	Offline
+API may break	Safe
+Hard to reproduce	Predictable
+📌 Which example is MOST used in industry?
+⭐ Most Common
+jest.mock('axios')
+axios.get.mockResolvedValue({ data: {} })
+
+
+Used in:
+
+Angular services
+
+React hooks
+
+Node.js services
+
+⭐ Best Practice (Modern)
+
+MSW (Mock Service Worker)
+Used by:
+
+Meta
+
+Shopify
+
+Microsoft
+
+Why?
+
+Mocks at network level
+
+Same mock for unit + integration tests
+
+❌ When this code is NOT used
+
+End-to-End tests (Cypress, Playwright)
+
+Performance tests
+
+Load tests
+
+Those use real backend
+
+🎯 How to say this confidently in an interview
+
+Use this answer 👇
+
+“Yes, I use these patterns in real projects. For unit tests, I mock APIs using Jest or MSW to avoid real network calls. This keeps tests fast, reliable, and CI-friendly.”
+
+🧠 One Golden Rule (Remember This)
+
+Mock boundaries, not business logic
