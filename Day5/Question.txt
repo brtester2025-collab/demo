@@ -1,0 +1,183 @@
+🟢 LEVEL 1 — Async Basics
+Q1
+
+Mock sendEmail(to, subject)
+
+Always resolves "SENT"
+
+Call it with ("a@test.com", "Hello")
+
+Assert:
+
+resolved value
+
+called with correct arguments
+
+
+
+
+
+Q2
+
+Mock generateOTP(phone)
+
+Resolves 1234
+
+Call twice with same phone
+
+Assert:
+
+call count is 2
+
+both resolved values are 1234
+
+🟡 LEVEL 2 — Different Results per Call
+
+
+
+
+
+
+Q3
+
+Mock createUser(name, role)
+
+1st call → resolves "CREATED"
+
+2nd call → resolves "ALREADY_EXISTS"
+
+Assert:
+
+both results
+
+correct arguments for each call
+
+
+
+
+
+
+
+Q4
+
+Mock fetchOrder(orderId, includeDetails)
+
+Resolve { id: orderId, details: includeDetails }
+
+Call:
+
+(1, true)
+
+(2, false)
+
+Assert:
+
+correct resolved objects
+
+correct call order
+
+🔵 LEVEL 3 — Error Handling (Important)
+
+
+
+
+
+
+
+
+
+
+
+
+
+Q5
+
+Mock login(username, password)
+
+1st call → resolves "SUCCESS"
+
+2nd call → rejects "INVALID_PASSWORD"
+
+Assert:
+
+first result
+
+second throws error
+
+both calls tracked correctly
+
+🔴 LEVEL 4 — Interview Tricky Ones
+
+
+
+
+
+
+
+
+
+
+
+Q6
+
+Mock uploadFile(fileName, size)
+
+Reject if size > 5
+
+Resolve "UPLOADED" otherwise
+
+Test:
+
+one success
+
+one failure
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Q7
+
+Mock payment(amount, currency)
+
+Resolve different values based on arguments:
+
+amount > 1000 → "OTP_REQUIRED"
+
+else → "PAID"
+
+Assert both cases
+
+
+
+
+
+
+
+
+
+⚡ BONUS (Very Real-World)
+Q8
+
+Mock registerUser(name, email, phone)
+
+First call → resolves "CREATED"
+
+Second call (same email) → rejects "DUPLICATE_EMAIL"
+
+Assert:
+
+result + error
+
+call order
+
+arguments
