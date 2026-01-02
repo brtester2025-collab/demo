@@ -1,0 +1,276 @@
+🧩 MOCKING EXAMPLE — COMPLETE
+Imagine a simple real-world scenario:
+
+You have a function getUserStatus that calls an external API fetchUser:
+
+// real code
+async function getUserStatus(fetchUser) {
+    const user = await fetchUser();
+    if (!user) return 'NO USER';
+    if (user.active) return 'ACTIVE';
+    return 'INACTIVE';
+}
+
+Step 1: Create a mock for the dependency
+const fetchUser = jest.fn();  // ✅ This is our mock dependency
+
+Step 2: Write tests for different scenarios
+test('user is active', async () => {
+    // Setup: define what the mock should return
+    fetchUser.mockResolvedValue({ name: 'Alice', active: true });
+
+    // Call the real function under test
+    const result = await getUserStatus(fetchUser);
+
+    // Assert the expected behavior
+    expect(result).toBe('ACTIVE');
+});
+
+test('user is inactive', async () => {
+    fetchUser.mockResolvedValue({ name: 'Bob', active: false });
+
+    const result = await getUserStatus(fetchUser);
+
+    expect(result).toBe('INACTIVE');
+});
+
+test('no user returned', async () => {
+    fetchUser.mockResolvedValue(null);  // simulate API returning nothing
+
+    const result = await getUserStatus(fetchUser);
+
+    expect(result).toBe('NO USER');
+});
+
+Step 3: Explanation of each part
+Part	Purpose
+jest.fn()	Creates a fake function that we can control
+mockResolvedValue()	Makes the mock return a resolved Promise with the value we choose
+getUserStatus(fetchUser)	The real function we want to test
+expect(result).toBe(...)	Assert the outcome of the real function, not the mock
+Step 4: Visual Diagram
+        Test starts
+             │
+             ▼
+    fetchUser mock created
+             │
+             ▼
+    mockResolvedValue({name:'Alice', active:true})
+             │
+             ▼
+   getUserStatus calls fetchUser()  ← Real function uses mock
+             │
+             ▼
+       fetchUser returns {name:'Alice', active:true}
+             │
+             ▼
+   getUserStatus checks `active` field
+             │
+             ▼
+       Returns 'ACTIVE'
+             │
+             ▼
+   expect(result).toBe('ACTIVE') ✅ Test passes
+
+
+💡 Notice: The mock only controls fetchUser’s behavior, it doesn’t test fetchUser itself. We test getUserStatus.
+
+Step 5: Optional: Multiple calls with Once
+test('multiple calls', async () => {
+    fetchUser
+        .mockResolvedValueOnce({ name: 'Alice', active: true })
+        .mockResolvedValueOnce({ name: 'Bob', active: false });
+
+    expect(await getUserStatus(fetchUser)).toBe('ACTIVE');
+    expect(await getUserStatus(fetchUser)).toBe('INACTIVE');
+});
+
+
+✅ This is how you simulate real sequences of API calls.
+
+🔑 Key Takeaways
+
+Mocks are for dependencies only – you never test the mock itself.
+
+Control return values using mockResolvedValue / mockRejectedValue / mockReturnValue.
+
+Assert the real function’s output, not the mock.
+
+Use Once to simulate multiple calls with different outcomes.
+
+Visualize it as: mock → function under test → assert result.
+
+If you want, I can make a full visual cheat sheet with all mock types (ReturnValue, ResolvedValue, RejectedValue, Implementation) in one diagram so it’s impossible to get confused again.
+
+Do you want me to make that?
+
+yes
+
+Perfect! Let’s make a full visual cheat sheet for Jest mocks — all types, when to use them, and how they flow. This will eliminate all confusion.
+
+🧩 Jest Mock Cheat Sheet — Visual & Explained
+🎯 Core Concept
+
+Flow:
+
+[TEST SETUP] --> [MOCK BEHAVIOR] --> [FUNCTION UNDER TEST] --> [ASSERT OUTPUT]
+
+
+Mocks control dependencies, we never test the mock itself.
+
+1️⃣ Creating a Mock
+const fetchUser = jest.fn();
+
+
+Creates a fake function
+
+Records calls & arguments
+
+Can return anything we want
+
+Visual:
+
+fetchUser()  <-- initially does nothing
+
+2️⃣ Basic Return Values
+Method	What it does	Example	Visual
+mockReturnValue(val)	Always returns val	fn.mockReturnValue(5)	fn() → 5, fn() → 5
+mockReturnValueOnce(val)	Returns val only once	fn.mockReturnValueOnce(5)	1st call → 5, 2nd call → undefined
+
+Flow Diagram:
+
+Call 1 → returns 5
+Call 2 → returns undefined
+
+3️⃣ Async Functions
+Method	What it does	Example	Visual
+mockResolvedValue(val)	Always returns Promise.resolve(val)	fn.mockResolvedValue('OK')	await fn() → 'OK'
+mockRejectedValue(err)	Always returns Promise.reject(err)	fn.mockRejectedValue(new Error('FAIL'))	await fn() → throws 'FAIL'
+mockResolvedValueOnce(val)	Only resolves once	fn.mockResolvedValueOnce('OK')	1st call → 'OK', 2nd call → undefined
+
+Flow Diagram:
+
+1st call → resolves 'OK'
+2nd call → resolves undefined
+
+4️⃣ Mock Implementation (Custom behavior)
+fn.mockImplementation((x) => x * 2);
+
+
+Useful when output depends on input
+
+Can also be async:
+
+fn.mockImplementation(async (x) => x * 2);
+
+
+Visual:
+
+fn(3) → 6
+fn(5) → 10
+
+5️⃣ Multiple Calls / Sequence
+fn
+  .mockResolvedValueOnce('A')
+  .mockResolvedValueOnce('B');
+
+
+Flow:
+
+Call 1 → 'A'
+Call 2 → 'B'
+Call 3 → undefined
+
+
+Perfect for simulating retries or API sequences
+
+6️⃣ Spy vs Mock
+Type	Does it call original?	Can override?
+Spy (jest.spyOn)	Yes (by default)	Yes (.mockResolvedValue)
+Mock (jest.fn)	No	Yes
+
+Flow:
+
+realFunction() → original logic
+spy → can watch OR override
+mock → replaces function completely
+
+7️⃣ Mocking Modules
+jest.mock('./api', () => ({
+  fetchUser: jest.fn(),
+}));
+
+
+Replace entire module with mocks
+
+Control return values in tests
+
+Visual:
+
+Test ----> Mocked module ----> Function under test
+
+8️⃣ Clearing & Resetting
+Method	Clears calls?	Clears return values?	Restores original?
+clearAllMocks()	✅	❌	❌
+resetAllMocks()	✅	✅	❌
+restoreAllMocks()	❌	❌	✅
+
+Tip:
+afterEach(() => jest.clearAllMocks()) prevents leakage across tests.
+
+9️⃣ Mindset Cheat Sheet
+[MOCK] → controls dependency output
+[FUNCT] → real function under test
+[ASSERT] → only care about output/behavior
+
+
+✅ Mocks = helpers
+✅ Function under test = real logic
+✅ Assert = result of function, never the mock itself
+
+🔹 Example Combined (All Concepts)
+const fetchUser = jest.fn();
+
+test('multiple cases', async () => {
+    fetchUser
+      .mockResolvedValueOnce({ active: true })   // 1st call
+      .mockResolvedValueOnce({ active: false })  // 2nd call
+      .mockResolvedValueOnce(null);              // 3rd call
+
+    const getUserStatus = async (fn) => {
+        const user = await fn();
+        if (!user) return 'NO USER';
+        return user.active ? 'ACTIVE' : 'INACTIVE';
+    }
+
+    expect(await getUserStatus(fetchUser)).toBe('ACTIVE');
+    expect(await getUserStatus(fetchUser)).toBe('INACTIVE');
+    expect(await getUserStatus(fetchUser)).toBe('NO USER');
+});
+
+
+Diagram Flow:
+
+Test Start
+    │
+    ▼
+fetchUser mock created
+    │
+    ▼
+mockResolvedValueOnce('ACTIVE') → call 1 → 'ACTIVE'
+mockResolvedValueOnce('INACTIVE') → call 2 → 'INACTIVE'
+mockResolvedValueOnce(null) → call 3 → 'NO USER'
+    │
+    ▼
+getUserStatus() → asserts output each time
+
+
+💡 Key Takeaways
+
+One dependency → multiple behaviors with Once
+
+Mock controls dependency, never your function under test
+
+Always assert real function output
+
+Clear mocks between tests to prevent leakage
