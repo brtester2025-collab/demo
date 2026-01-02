@@ -1,0 +1,155 @@
+🔥 Tricky Question 1: Multiple Tests, Same Level
+❓ Code
+beforeEach(() => console.log('G beforeEach'));
+afterEach(() => console.log('G afterEach'));
+
+describe('A', () => {
+  beforeEach(() => console.log('A beforeEach'));
+  afterEach(() => console.log('A afterEach'));
+
+  test('test 1', () => console.log('test 1'));
+  test('test 2', () => console.log('test 2'));
+});
+
+✅ Output
+G beforeEach
+A beforeEach
+test 1
+A afterEach
+G afterEach
+
+G beforeEach
+A beforeEach
+test 2
+A afterEach
+G afterEach
+
+🧠 Why
+
+Hooks run per test, not per describe.
+
+🔥 Tricky Question 2: beforeAll vs beforeEach
+❓ Code
+beforeAll(() => console.log('G beforeAll'));
+beforeEach(() => console.log('G beforeEach'));
+
+describe('A', () => {
+  beforeAll(() => console.log('A beforeAll'));
+  beforeEach(() => console.log('A beforeEach'));
+
+  test('t1', () => console.log('test'));
+});
+
+✅ Output
+G beforeAll
+A beforeAll
+G beforeEach
+A beforeEach
+test
+
+🧠 Why
+
+beforeAll runs once
+
+beforeEach runs for every test
+
+🔥 Tricky Question 3: Nested afterAll
+❓ Code
+afterAll(() => console.log('G afterAll'));
+
+describe('A', () => {
+  afterAll(() => console.log('A afterAll'));
+
+  describe('B', () => {
+    afterAll(() => console.log('B afterAll'));
+
+    test('t', () => {});
+  });
+});
+
+✅ Output
+B afterAll
+A afterAll
+G afterAll
+
+🧠 Why
+
+afterAll always runs inside → outside
+
+🔥 Tricky Question 4: ❗ No Tests Inside Describe
+❓ Code
+describe('Empty block', () => {
+  beforeAll(() => console.log('beforeAll'));
+  beforeEach(() => console.log('beforeEach'));
+  afterEach(() => console.log('afterEach'));
+  afterAll(() => console.log('afterAll'));
+});
+
+❓ What runs?
+✅ Answer
+(beforeAll ❌)
+(beforeEach ❌)
+(afterEach ❌)
+(afterAll ❌)
+
+🧠 Why
+
+👉 No tests = no hooks run
+
+🔥 Tricky Question 5: Test Failure
+❓ Code
+beforeEach(() => console.log('beforeEach'));
+afterEach(() => console.log('afterEach'));
+
+test('fails', () => {
+  console.log('test');
+  throw new Error('fail');
+});
+
+✅ Output
+beforeEach
+test
+afterEach
+
+🧠 Why
+
+afterEach always runs, even if the test fails.
+
+🔥 Tricky Question 6: Async Hook Timing
+❓ Code
+beforeEach(async () => {
+  console.log('beforeEach start');
+  await Promise.resolve();
+  console.log('beforeEach end');
+});
+
+test('t', () => console.log('test'));
+
+✅ Output
+beforeEach start
+beforeEach end
+test
+
+🧠 Why
+
+Jest waits for async hooks to finish.
+
+🔥 Tricky Question 7: Hook Order with 3 Levels
+❓ Question
+
+Which runs first?
+
+L2 afterEach  OR  L1 afterEach?
+
+✅ Answer
+L2 afterEach
+
+🧠 Rule
+
+Cleanup always runs deepest first
+
+🎯 Ultra-Short Rules (Interview Cheat Sheet)
+beforeAll   → outer → inner (once)
+beforeEach  → outer → inner (per test)
+afterEach   → inner → outer (per test)
+afterAll    → inner → outer (once)
