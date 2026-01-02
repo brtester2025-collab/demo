@@ -1,0 +1,56 @@
+✅ Direct Answer
+
+Yes.
+In nested describe blocks:
+
+Child afterEach runs BEFORE parent afterEach.
+
+🔁 Correct Hook Order (Per Test)
+
+For a test inside a nested describe, Jest runs hooks in this exact order:
+
+Parent beforeEach
+Child beforeEach
+Test
+Child afterEach   ✅
+Parent afterEach  ✅
+
+
+So cleanup happens from inner → outer.
+
+🧠 Why Does Jest Do This?
+
+Think of it like stack unwinding or resource cleanup:
+
+🔹 beforeEach = setup
+
+Parent sets up shared/global state
+
+Child sets up specific/local state
+
+🔹 afterEach = cleanup (reverse order)
+
+Child cleans up what it created
+
+Parent cleans up what it created
+
+This prevents:
+
+Leaks
+
+Invalid state
+
+Parent cleanup breaking child logic
+
+👉 This follows the same principle as:
+
+try → finally
+
+Call stack execution
+
+Nested transactions
+
+📌 Simple Analogy (Very Interview-Friendly)
+
+“beforeEach runs outside → inside,
+afterEach runs inside → outside.”

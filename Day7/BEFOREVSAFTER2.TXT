@@ -1,0 +1,98 @@
+
+🧪 Example: 3 Nested Levels
+beforeAll(() => console.log('G - beforeAll'));
+afterAll(() => console.log('G - afterAll'));
+beforeEach(() => console.log('G - beforeEach'));
+afterEach(() => console.log('G - afterEach'));
+
+describe('Level 1', () => {
+  beforeAll(() => console.log('L1 - beforeAll'));
+  afterAll(() => console.log('L1 - afterAll'));
+  beforeEach(() => console.log('L1 - beforeEach'));
+  afterEach(() => console.log('L1 - afterEach'));
+
+  describe('Level 2', () => {
+    beforeAll(() => console.log('L2 - beforeAll'));
+    afterAll(() => console.log('L2 - afterAll'));
+    beforeEach(() => console.log('L2 - beforeEach'));
+    afterEach(() => console.log('L2 - afterEach'));
+
+    test('deep test', () => console.log('TEST'));
+  });
+});
+
+✅ Exact Execution Order
+G - beforeAll
+L1 - beforeAll
+L2 - beforeAll
+
+G - beforeEach
+L1 - beforeEach
+L2 - beforeEach
+TEST
+L2 - afterEach
+L1 - afterEach
+G - afterEach
+
+L2 - afterAll
+L1 - afterAll
+G - afterAll
+
+🔍 Why This Happens (Rule-Based Explanation)
+🔹 beforeAll
+
+Runs once per scope, outer → inner
+
+Global → Level 1 → Level 2
+
+🔹 beforeEach
+
+Runs for every test, outer → inner
+
+Global → Level 1 → Level 2
+
+🔹 afterEach
+
+Runs for every test, inner → outer
+
+Level 2 → Level 1 → Global
+
+🔹 afterAll
+
+Runs once per scope, inner → outer
+
+Level 2 → Level 1 → Global
+
+🧠 The Golden Rule (Memorize This)
+SETUP goes DOWN the tree
+CLEANUP goes UP the tree
+
+
+or
+
+before*  → outer → inner
+after*   → inner → outer
+
+🧪 Stack Visualization (Mental Model)
+
+Think of each describe as pushing onto a stack:
+
+Setup Phase
+push G
+push L1
+push L2
+
+Cleanup Phase
+pop L2
+pop L1
+pop G
+
+🎯 Interview Trick Question (Quick Check)
+
+❓ If Level 2 throws an error inside the test, will:
+
+afterEach still run? ✅ YES
+
+Parent afterEach run? ✅ YES
+
+afterAll run? ✅ YES (if Jest doesn’t crash)
