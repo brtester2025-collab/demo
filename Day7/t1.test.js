@@ -30,14 +30,14 @@ test('reject with error', async () => {
 // wrong code
 
 
-const login = jest.fn();
+// const login = jest.fn();
 
-test('check the cases for the mock', async () => {
-    login.mockReturnValue("Success")
+// test('check the cases for the mock', async () => {
+//     login.mockReturnValue("Success")
 
-})
+// })
 
-test('error', async () => {
-    login.mockRejectedValue(new Error('invalid password'))
-})
+// test('error', async () => {
+//     login.mockRejectedValue(new Error('invalid password'))
+// })
 
