@@ -42,6 +42,13 @@ test('for checking', async () => {
     expect(login1).toHaveBeenNthCalledWith(2, '2', 12345)
 })
 
+const catcher = jest.fn();
+test('to check the status', async () => {
+    catcher.mockResolvedValue('API success')
+    catcher.mockRejectedValueOnce(new Error('invalid'))
+
+})
+
 
 
 
