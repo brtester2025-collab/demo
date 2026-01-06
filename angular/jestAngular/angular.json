@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "service-testing-demo": {
+    "jestAngular": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -17,7 +17,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:application",
           "options": {
-            "outputPath": "dist/service-testing-demo",
+            "outputPath": "dist/jest-angular",
             "index": "src/index.html",
             "browser": "src/main.ts",
             "polyfills": [
@@ -36,9 +36,9 @@
             ],
             "scripts": [],
             "server": "src/main.server.ts",
-            "outputMode": "server",
+            "prerender": true,
             "ssr": {
-              "entry": "src/server.ts"
+              "entry": "server.ts"
             }
           },
           "configurations": {
@@ -51,8 +51,8 @@
                 },
                 {
                   "type": "anyComponentStyle",
-                  "maximumWarning": "4kB",
-                  "maximumError": "8kB"
+                  "maximumWarning": "2kB",
+                  "maximumError": "4kB"
                 }
               ],
               "outputHashing": "all"
@@ -69,10 +69,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "service-testing-demo:build:production"
+              "buildTarget": "jestAngular:build:production"
             },
             "development": {
-              "buildTarget": "service-testing-demo:build:development"
+              "buildTarget": "jestAngular:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -103,8 +103,5 @@
         }
       }
     }
-  },
-  "cli": {
-    "analytics": false
   }
 }
