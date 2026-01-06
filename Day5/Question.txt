@@ -106,17 +106,9 @@ second throws error
 
 both calls tracked correctly
 
+
+
 🔴 LEVEL 4 — Interview Tricky Ones
-
-
-
-
-
-
-
-
-
-
 
 Q6
 
