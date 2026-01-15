@@ -1,0 +1,184 @@
+🔥 Jest API Coding Challenge (Interview Level)
+📌 Scenario
+
+You are testing a User Management API.
+
+Base URL
+https://reqres.in/api
+
+🧪 CHALLENGE TASKS
+✅ Task 1: GET Users
+
+Endpoint
+
+GET /users?page=2
+
+
+Requirements
+
+Status code should be 200
+
+Response should contain page = 2
+
+Users array should not be empty
+
+First user should have id, email, first_name
+
+✅ Task 2: Create User
+
+Endpoint
+
+POST /users
+
+
+Payload
+
+{
+  "name": "John",
+  "job": "QA Engineer"
+}
+
+
+Requirements
+
+Status code should be 201
+
+Response should contain id
+
+Response should contain correct name and job
+
+✅ Task 3: Negative Test – Invalid User
+
+Endpoint
+
+POST /users
+
+
+Payload
+
+{}
+
+
+Requirements
+
+Status code should NOT be 201
+
+Response should return error or empty body
+
+✅ Task 4: Single User Not Found
+
+Endpoint
+
+GET /users/23
+
+
+Requirements
+
+Status code should be 404
+
+🛠️ RULES (Interview Constraints)
+
+Use Jest
+
+Use async/await
+
+Do not hardcode response values except payload
+
+Validate both status and body
+
+Clean & readable code
+
+📁 Expected File Structure
+tests/
+ └── users.api.test.js
+
+💡 BONUS (Optional – Senior Level)
+
+Use beforeAll
+
+Extract API call into helper function
+
+Add schema-style validation
+
+Add comments
+
+🧩 Starter Code (You complete assertions)
+import fetch from 'node-fetch';
+
+const BASE_URL = 'https://reqres.in/api';
+
+describe('User API Tests', () => {
+
+  test('GET users - page 2', async () => {
+    const response = await fetch(`${BASE_URL}/users?page=2`);
+    const data = await response.json();
+
+    // 👉 WRITE ASSERTIONS HERE
+  });
+
+  test('Create user', async () => {
+    const response = await fetch(`${BASE_URL}/users`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        name: 'John',
+        job: 'QA Engineer'
+      })
+    });
+
+    const data = await response.json();
+
+    // 👉 WRITE ASSERTIONS HERE
+  });
+
+  test('Create user - negative case', async () => {
+    const response = await fetch(`${BASE_URL}/users`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({})
+    });
+
+    // 👉 WRITE ASSERTIONS HERE
+  });
+
+  test('Get single user - not found', async () => {
+    const response = await fetch(`${BASE_URL}/users/23`);
+
+    // 👉 WRITE ASSERTIONS HERE
+  });
+
+});
+
+🧠 How Interviewers Evaluate This
+
+They look for:
+
+Correct async handling
+
+Proper assertions
+
+Negative testing
+
+Clean test names
+
+API understanding
+
+👉 Your Turn
+
+Reply with your completed code, and I will:
+
+Review it like an interviewer
+
+Point out mistakes
+
+Suggest improvements
+
+Show ideal solution
+
+If you want, I can also:
+
+Convert this to supertest
+
+Add CI-ready version
+
+Do a mock live interview (I ask, you code)
