@@ -20,11 +20,11 @@ test('login success returns token', async () => {
 /*
 
 test('login failure returns LOGIN_FAILED', async () => {
-  loginApi.mockRejectedValue(new Error('Invalid credentials'));
+loginApi.mockRejectedValue(new Error('Invalid credentials'));
 
-  const result = await login('user', 'wrong-password');
+const result = await login('user', 'wrong-password');
 
-  expect(result).toBe('LOGIN_FAILED');
+expect(result).toBe('LOGIN_FAILED');
 });
 
 */
