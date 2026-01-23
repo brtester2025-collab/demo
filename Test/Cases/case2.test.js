@@ -71,12 +71,12 @@ test('LOOP-V2', async ({ request }) => {
         expect(typeof user.address.coordinates).toBeTruthy()
         expect(typeof user.address.coordinates.lat).toBe('number')
         expect(typeof user.address.coordinates.lng).toBe('number')
+        expect(typeof user.address.country).toBe('string')
+        expect(typeof user.macAddress).toBe('string')
+        expect(typeof user.university).toBe()
 
     }
 
 })
-
-
-
 
 console.log("-----------------------------THE-START---------------------------------");
