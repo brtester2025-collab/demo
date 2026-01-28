@@ -81,6 +81,7 @@ test('Start checking the process', async ({ request }) => {
 
 
 test('V-start - correct way', async ({ request }) => {
+    const start = Date.now();
     const response = await request.post(
         'https://green.demo-7.com/user/greenexpress/products/productlistwithfilter',
         {
@@ -208,6 +209,10 @@ test('V-start - correct way', async ({ request }) => {
         })
         cnt2++;
     }
+    const responsetime = Date.now() - start
+    console.log('the resposne time for case 3: ', responsetime);
+    expect(responsetime).toBeLessThan(3000)
+
     console.log("IDEEE", cnt2 - 1);
 
     // console.log(data)
